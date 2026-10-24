@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://yudofu185.github.io/cloudgallery-updates/app-version.schema.json",
+  "title": "VRChat Cloud Gallery Manager 更新情報",
+  "description": "管理ツールが起動時に読む更新情報（schemaVersion 2）。設計: CloudGallery リポジトリの docs/UPDATE_FEED_DESIGN.md",
+  "type": "object",
+  "required": ["schemaVersion", "updatedAt", "channels"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "const": 2 },
+    "updatedAt": {
+      "description": "このファイルを最後に更新した日時（タイムゾーン付き ISO 8601）",
+      "$ref": "#/$defs/dateTime"
+    },
+    "channels": {
+      "type": "object",
+      "required": ["stable"],
+      "properties": {
+        "stable": { "$ref": "#/$defs/channel" },
+        "beta": { "$ref": "#/$defs/channel" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "dateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d+)?(Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^v?\\d+\\.\\d+\\.\\d+([-+][0-9A-Za-z.-]+)?$"
+    },
+    "channel": {
+      "type": "object",
+      "required": ["version", "publishedAt", "downloadUrl"],
+      "properties": {
+        "version": {
+          "description": "最新バージョン（x.y.z。接尾辞 -beta.1 などは比較で無視される）",
+          "$ref": "#/$defs/version"
+        },
+        "publishedAt": {
+          "description": "公開日時。これより前は通知されない（予約公開）",
+          "$ref": "#/$defs/dateTime"
+        },
+        "downloadUrl": {
+          "description": "配布ページ。https かつ booth.pm / github.com / yudofu185.github.io（とそのサブドメイン）のみ有効",
+          "type": "string",
+          "pattern": "^https://([a-z0-9-]+\\.)*(booth\\.pm|github\\.com|yudofu185\\.github\\.io)(/.*)?$"
+        },
+        "releaseNotes": {
+          "description": "更新内容（アプリでは 600 文字まで表示）",
+          "type": "string",
+          "maxLength": 600
+        },
+        "security": {
+          "description": "true でセキュリティ更新として強調（バナーを閉じられない）",
+          "type": "boolean"
+        },
+        "minimumSupported": {
+          "description": "これより古いバージョンに「サポート対象外」と表示する",
+          "$ref": "#/$defs/version"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

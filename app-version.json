@@ -1,0 +1,22 @@
+{
+  "$schema": "./app-version.schema.json",
+  "schemaVersion": 2,
+  "updatedAt": "2026-10-24T18:00:00+09:00",
+  "channels": {
+    "stable": {
+      "version": "1.0.0",
+      "publishedAt": "2026-10-24T18:00:00+09:00",
+      "downloadUrl": "https://booth.pm/ja/items/0000000",
+      "releaseNotes": "最初の公開版です。",
+      "security": false,
+      "minimumSupported": "1.0.0"
+    },
+    "beta": {
+      "version": "1.0.0",
+      "publishedAt": "2026-10-24T18:00:00+09:00",
+      "downloadUrl": "https://booth.pm/ja/items/0000000",
+      "releaseNotes": "最初の公開版です。",
+      "security": false
+    }
+  }
+}
