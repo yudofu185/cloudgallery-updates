@@ -14,8 +14,12 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # v4 は廃止予定の Node.js 20 で動くため、Node.js 24 で動く v6 を使う
+      - uses: actions/checkout@v6
         with:
-          node-version: 20
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          # Node.js 20 は 2026-04-30 でサポート終了。現在の LTS の 24 で検査する
+          node-version: 24
       - run: node scripts/validate.mjs app-version.json
